@@ -6,12 +6,13 @@ local function mathjs(exp)
   local b,c = http.request(url)
   local text = nil
   if c == 200 then
-    text = '= '..b
+    text = 'نتیجه: '..b
   
   elseif c == 400 then
     text = b
   else
-    text = 'Error!'
+    text = 'Unexpected error\n'
+      ..'Is api.mathjs.org up?'
   end
   return text
 end
@@ -21,10 +22,10 @@ local function run(msg, matches)
 end
 
 return {
-  description = "Calculate Your Formulas",
-  usage = "/calc (formulas) : ex.formulas (3+7)*(2^3)/5",
+  description = "Calculate math expressions with mathjs API",
+  usage = "!calc [expression]: evaluates the expression and sends the result.",
   patterns = {
-    "^[!/]calc (.*)$"
+    "^!calc (.*)$"
   },
   run = run
 }
